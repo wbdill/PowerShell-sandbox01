@@ -1,5 +1,5 @@
 ﻿#------------------------------------------------------------------------------------------
-# Desc: Powershell to document SQL Agent Jobs
+# Desc: Powershell to document SQL Agent Jobs from one or more SQL instances
 # Auth: Brian Dill 2021-07-04
 # GitHub: https://github.com/wbdill/PowerShell-sandbox01/blob/master/GetSQLAgentJobs.ps1
 # Dependencies: Join module        # Install-Module -Name JoinModule  # need to Run Powershell as admin to be able to install
@@ -16,16 +16,16 @@ Clear-Host
 #------------------------------------------------------------------------------------------
 # Config Params
 #------------------------------------------------------------------------------------------
-$SqlInstances        = "ProdSQL01", "ProdSQL02", "ProdSQL03"
+$SqlInstances        = "ProdSQL01", "ProdSQL02", "ProdSQL03", "SomeSQLServer\Instancename"
 
-$ShowJobsPopup         = 1   # Jobs only
+$ShowJobsPopup         = 1   # Jobs only       1=Yes, 0=No
 $ShowStepsPopup        = 0   # Steps Only
 $ShowSchedulesPopup    = 0   # Schedules only
 
-$ShowJobStepsPopup     = 0   # Join of Jobs and Steps
+$ShowJobStepsPopup     = 0   # Join of Jobs and Steps (job data repeats for each step)
 $ShowJobSchedulesPopup = 0   # Join of Jobs and Schedules (joining on first Schedule ONLY!  If a job has > 1 schedules, refer to SqlAgentSchedules.csv)
 
-$SaveCsvFiles          = 1             # 1 = Yes, 0 = No
+$SaveCsvFiles          = 1   # Save CSV files? # 1=Yes, 0=No
 $CsvSaveFolder         = "C:\Tasks\"
 $CsvJobsFile           = [System.IO.Path]::Combine($CsvSaveFolder, "SqlAgentJobs.csv")
 $CsvStepsFile          = [System.IO.Path]::Combine($CsvSaveFolder, "SqlAgentJobSteps.csv")
