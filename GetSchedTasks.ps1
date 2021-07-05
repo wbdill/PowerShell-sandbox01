@@ -88,8 +88,11 @@ Get-ScheduledTask -TaskPath $TaskFolder |
     }
 }
 
-$Result = $Result | Select-Object Name, Enabled, DaysOfWeek, TriggerDays, StartTime, Repetition, Duration, Action, Arguments, Description, Author, Start  # select in a specific order
+# select specific columns
+$Result = $Result | Select-Object Name, Enabled, DaysOfWeek, TriggerDays, StartTime, Repetition, Duration, Action, Arguments, Description, Author, Start | 
+    Sort-Object Name
 $Result | Out-GridView
+
 If ($SaveToCsv) {
     $DateIso = Get-Date -Format "yyyy-MM-dd_hhmmss"
     $SaveFullPath = [System.IO.Path]::Combine($CsvSaveFolder, "SchedTasks_$DateIso.csv")
