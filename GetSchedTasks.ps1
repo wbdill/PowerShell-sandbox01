@@ -9,7 +9,7 @@ Clear-Host
 # Config vars
 #------------------------------------------------------------------------------------------
 $TaskNameLike   = "*"              # "*" to get all tasks.     "Foo*" to get tasks that start with "Foo"
-$TaskFolders    = "\", "\TOWER\"   # String array of folders.  "\" = tasks in root folder.  "\Bar\" = all tasks in Bar folder
+$TaskFolders    = "\" #, "\TOWER\"   # String array of folders.  "\" = tasks in root folder.  "\Bar\" = all tasks in Bar folder
 $SaveToCsv      = 1                # 1 to save, 0 to n\ot save
 $CsvSaveFolder  = "C:\Tasks\"      # Where you want to save the CSV output
 
@@ -41,6 +41,7 @@ $TaskFolders | ForEach-Object {
 
         $Task = $_
         Write-Host $Task.TaskName
+
         Try {
             [string]$Name          = $Task.TaskName
             [string]$Author        = $Task.Author
@@ -62,10 +63,10 @@ $TaskFolders | ForEach-Object {
                 # If the task has a triger, overwrite the trigger vars with valid values
                 $Start         = $Task.Triggers | Select -ExpandProperty StartBoundary
                 $StartTime     = $Start.ToString("hh:mm")
-                $DaysOfWeek    = $Task.Triggers | Select -Expandproperty DaysOfWeek       #$Task.Triggers[0].DaysOfWeek 
+                #$DaysOfWeek    = $Task.Triggers | Select -Expandproperty DaysOfWeek       #$Task.Triggers[0].DaysOfWeek 
                 $Repetition    = $Task.Triggers.Repetition | Select -ExpandProperty Interval
                 $Duration      = $Task.triggers.Repetition | Select -ExpandProperty Duration
-                $TriggerDays   = $Task.Triggers | Select -ExpandProperty DaysInterval  #$Task.Triggers[0].DaysInterval
+                #$TriggerDays   = $Task.Triggers | Select -ExpandProperty DaysInterval  #$Task.Triggers[0].DaysInterval
             } Catch {
                 Write-Host "--- INFO: No Trigger found for $Name"
             }
